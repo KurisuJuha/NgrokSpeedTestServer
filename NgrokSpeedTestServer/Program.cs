@@ -1,9 +1,26 @@
-﻿using System.Net.WebSockets;
+﻿using WebSocketSharp;
+using WebSocketSharp.Server;
 
-public class Program
+
+Console.WriteLine("Hello, World!");
+var webSocketServer = new WebSocketServer(8080, false);
+webSocketServer.AddWebSocketService<Server>("/");
+webSocketServer.Start();
+while (true)
 {
-    public static void Main(string[] args)
-    {
+    var m = Console.ReadLine();
+    if (m == "quit") break;
+}
+webSocketServer.Stop();
 
-    }
+public class Server : WebSocketBehavior
+{
+    protected override void OnClose(CloseEventArgs e)
+        => Console.WriteLine("close");
+    protected override void OnOpen()
+        => Console.WriteLine("open");
+    protected override void OnError(WebSocketSharp.ErrorEventArgs e)
+        => Console.WriteLine("error");
+    protected override void OnMessage(MessageEventArgs e)
+        => Send(e.RawData);
 }
