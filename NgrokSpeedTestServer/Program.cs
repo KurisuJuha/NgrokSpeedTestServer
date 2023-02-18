@@ -3,7 +3,7 @@ using WebSocketSharp.Server;
 
 
 Console.WriteLine("Hello, World!");
-var webSocketServer = new WebSocketServer(8080);
+var webSocketServer = new WebSocketServer(8080, false);
 webSocketServer.AddWebSocketService<Server>("/");
 webSocketServer.Start();
 while (true)
