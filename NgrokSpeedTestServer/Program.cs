@@ -1,26 +1,20 @@
-﻿using WebSocketSharp;
-using WebSocketSharp.Server;
-
+﻿using System.Text;
+using SimpleTcp;
 
 Console.WriteLine("Hello, World!");
-var webSocketServer = new WebSocketServer(8080);
-webSocketServer.AddWebSocketService<Server>("/");
-webSocketServer.Start();
+var server = new SimpleTcpServer("localhost:8080");
+
+server.Events.ClientConnected += (sender, e) => Console.WriteLine();
+server.Events.ClientDisconnected += (sender, e) => Console.WriteLine($"[{e.IpPort}] client disconnected: {e.Reason}");
+server.Events.DataReceived += (sender, e) =>
+{
+    Console.WriteLine($"[{e.IpPort}]: {string.Join(",", e.Data)}");
+    server.Send(e.IpPort, e.Data);
+};
+server.Start();
+
 while (true)
 {
     var m = Console.ReadLine();
     if (m == "quit") break;
-}
-webSocketServer.Stop();
-
-public class Server : WebSocketBehavior
-{
-    protected override void OnClose(CloseEventArgs e)
-        => Console.WriteLine("close");
-    protected override void OnOpen()
-        => Console.WriteLine("open");
-    protected override void OnError(WebSocketSharp.ErrorEventArgs e)
-        => Console.WriteLine("error");
-    protected override void OnMessage(MessageEventArgs e)
-        => Send(e.RawData);
 }
