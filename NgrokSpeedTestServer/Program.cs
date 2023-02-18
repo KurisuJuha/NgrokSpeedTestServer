@@ -8,8 +8,7 @@ internal class Program
     static void Main(string[] args)
     {
         Console.WriteLine("Hello, World!");
-        var webSocketServer = new WebSocketServer(2000);
-        webSocketServer.SslConfiguration.EnabledSslProtocols = System.Security.Authentication.SslProtocols.None;
+        var webSocketServer = new WebSocketServer(8080);
         webSocketServer.AddWebSocketService<Server>("/");
         webSocketServer.Start();
         while (true)
