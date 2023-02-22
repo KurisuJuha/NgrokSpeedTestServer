@@ -22,5 +22,8 @@ public class Server : WebSocketBehavior
     protected override void OnError(WebSocketSharp.ErrorEventArgs e)
         => Console.WriteLine("error");
     protected override void OnMessage(MessageEventArgs e)
-        => Send(e.RawData);
+    {
+        Console.WriteLine(System.Text.Encoding.UTF8.GetString(e.RawData));
+        Send(e.RawData);
+    }
 }
