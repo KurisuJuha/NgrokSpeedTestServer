@@ -3,9 +3,10 @@ using WebSocketSharp.Server;
 
 
 Console.WriteLine("Hello, World!");
-var webSocketServer = new WebSocketServer(8080, false);
+var webSocketServer = new WebSocketServer(3000);
 webSocketServer.AddWebSocketService<Server>("/");
 webSocketServer.Start();
+webSocketServer.AllowForwardedRequest = true;
 while (true)
 {
     var m = Console.ReadLine();
