@@ -1,20 +1,18 @@
-﻿using System.Text;
-using SimpleTcp;
+﻿using System.Net;
 
-Console.WriteLine("Hello, World!");
-var server = new SimpleTcpServer("localhost:8080");
+const int port = 8080;
 
-server.Events.ClientConnected += (sender, e) => Console.WriteLine();
-server.Events.ClientDisconnected += (sender, e) => Console.WriteLine($"[{e.IpPort}] client disconnected: {e.Reason}");
-server.Events.DataReceived += (sender, e) =>
-{
-    Console.WriteLine($"[{e.IpPort}]: {string.Join(",", e.Data)}");
-    server.Send(e.IpPort, e.Data);
-};
+Console.WriteLine($"port: {port}");
+Console.WriteLine();
+
+var server = new GameServer(IPAddress.Any, port);
+
+Console.Write("Server starting..");
 server.Start();
+Console.WriteLine("..Done");
 
-while (true)
-{
-    var m = Console.ReadLine();
-    if (m == "quit") break;
-}
+Console.ReadKey(true);
+
+Console.Write("Server stopping..");
+server.Stop();
+Console.WriteLine("..Done");
