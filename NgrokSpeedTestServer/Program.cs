@@ -5,8 +5,8 @@ using WebSocketSharp.Server;
 Console.WriteLine("Hello, World!");
 var webSocketServer = new WebSocketServer(3000);
 webSocketServer.AddWebSocketService<Server>("/");
-webSocketServer.Start();
 webSocketServer.AllowForwardedRequest = true;
+webSocketServer.Start();
 while (true)
 {
     var m = Console.ReadLine();
