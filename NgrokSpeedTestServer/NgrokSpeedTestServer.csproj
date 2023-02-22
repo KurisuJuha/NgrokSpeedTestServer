@@ -8,6 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Reference Include="websocket-sharp">
+      <HintPath>..\websocket-sharp.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
