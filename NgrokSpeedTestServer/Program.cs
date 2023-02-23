@@ -8,7 +8,7 @@ server.Start(socket =>
     socket.OnOpen += () => Console.WriteLine("open");
     socket.OnClose += () => Console.WriteLine("close");
     socket.OnBinary += bytes => socket.Send(bytes);
-    socket.OnMessage += message => socket.Send(message);
+    socket.OnMessage += message => socket.Send(socket.ConnectionInfo.Id.ToString());
 });
 
 while (true) ;
