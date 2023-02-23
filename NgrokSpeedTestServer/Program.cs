@@ -2,13 +2,8 @@
 using Fleck;
 
 WebSocketServer server = new WebSocketServer("ws://0.0.0.0:3000");
+GameServer gameServer = new GameServer(server, 8);
 
-server.Start(socket =>
-{
-    socket.OnOpen += () => Console.WriteLine("open");
-    socket.OnClose += () => Console.WriteLine("close");
-    socket.OnBinary += bytes => socket.Send(bytes);
-    socket.OnMessage += message => socket.Send(socket.ConnectionInfo.Id.ToString());
-});
+gameServer.Start();
 
 while (true) ;
