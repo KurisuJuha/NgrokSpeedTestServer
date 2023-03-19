@@ -37,6 +37,7 @@ public class GameServer
         timer.Elapsed += (sender, e) =>
         {
             List<byte> bytes = new List<byte>();
+            bytes.AddRange(BitConverter.GetBytes(clients.Count));
 
             foreach (var key in clients.Keys)
             {
